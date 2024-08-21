@@ -81,8 +81,12 @@ async function generatePositiveFeedback(userInfo: GitHubUserInfo): Promise<strin
   }
 }
 
-export const POST: RequestHandler = async ({ request }) => {
-  const { username } = await request.json();
+export const GET: RequestHandler = async ({ params }) => {
+  const { username } = params;
+
+  if (!username) {
+    return json({ error: 'Username is required' }, { status: 400 });
+  }
 
   try {
     const userInfo = await getGitHubUserInfo(username);
@@ -91,4 +95,4 @@ export const POST: RequestHandler = async ({ request }) => {
   } catch {
     return json({ error: 'Failed to generate feedback' }, { status: 500 });
   }
-};
+}

@@ -12,13 +12,7 @@
     username = event.detail;
     loading = true;
     try {
-      const response = await fetch('/api/v1/github-feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-      });
+      const response = await fetch(`/api/v1/github-feedback/${username}`);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
